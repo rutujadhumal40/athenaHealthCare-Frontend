@@ -1,0 +1,12 @@
+.patients-list {
+    margin: 1rem 0;
+}
+
+.patients-list .icon {
+    cursor: pointer;
+    color: var(--primary-color);
+ }
+
+.patients-list td.icon {
+   width: 80px;
+ }

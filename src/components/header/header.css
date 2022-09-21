@@ -1,0 +1,7 @@
+.header {
+    background: var(--black-background);
+    text-align: center;
+    padding: 1rem;
+    letter-spacing: 1px;
+    font-size: 20px;
+}

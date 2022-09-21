@@ -1,0 +1,8 @@
+.step-one .address {
+    resize: none;
+}
+
+.step-one .baby-gender .form-check{
+    display: inline-block;
+    margin-left: 1rem;
+}

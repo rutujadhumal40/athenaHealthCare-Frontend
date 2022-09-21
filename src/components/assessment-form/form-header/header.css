@@ -1,0 +1,16 @@
+.form-header {
+    text-align: center;
+    color: var(--text-color);
+    font-size: 25px;
+    font-weight: var(--medium-font-weight);
+    margin-top: 1rem;
+}
+
+.form-header a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.form-header a:hover {
+    text-decoration: underline;
+}

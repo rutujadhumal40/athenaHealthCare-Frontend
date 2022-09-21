@@ -1,0 +1,48 @@
+.home-page {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 1rem;
+}
+
+.home-page .header-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+.home-page .header-section .search-box {
+    flex: 1;
+}
+
+.btn {
+    width: 150px;
+    height: auto;
+    margin: 0 1rem;
+    background-color: var(--primary-color);
+    border: var(--primary-color);
+}
+
+.btn:hover,
+.btn:active {
+    background-color: var(--primary-color);
+    border: var(--primary-color);
+}
+
+.step-form .btn {
+    margin: 0;
+}
+
+.step-form .update-btn {
+    margin-left: 1rem;
+}
+
+.step-form .btn.btn-primary {
+    background-color: var(--primary-color);
+    border: var(--primary-color);
+}
+
+.loading {
+    text-align: center;
+    font-size: 20px;
+    margin-top: 1rem;
+}

@@ -1,0 +1,6 @@
+.step-two .vital-signs {
+    text-align: center;
+    font-weight: var(--medium-font-weight);
+    text-decoration: underline;
+    margin: 1rem;
+}
