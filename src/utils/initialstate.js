@@ -1,10 +1,13 @@
 export const initialState = {
   patientBasicInfo: {
+    patient_id: "",
     suffix: "",
-    first_name: "",
-    last_name: "",
-    country_code: "",
+    firstname: "",
+    lastname: "",
+    countrycode: "",
     state: "",
+    homephone: "",
+    mobilephone: "",
     zip: "",
     dob: "",
     department_id: "",

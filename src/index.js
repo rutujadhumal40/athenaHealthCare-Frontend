@@ -10,6 +10,8 @@ import StepThree from "./components/assessment-form/step-three/StepThree";
 import StepTwo from "./components/assessment-form/step-two/StepTwo";
 import StepFive from "./components/assessment-form/stepFive/StepFive";
 import Home from "./components/home/Home";
+import Appointment from "./components/PatientsInfo/Appointments/appointment";
+import BasicInfo from "./components/PatientsInfo/BasicInfo/BasicInfo";
 import DataContext from "./context/DataContext";
 import "./index.css";
 import { BASE_API_URL } from "./utils/constants";
@@ -29,7 +31,11 @@ const AppRoutes = () => {
   const [isReadOnly, setIsReadOnly] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [patientId, setPatientId] = useState("");
-
+  const [filteredData, setFilteredData] = useState([]);
+  const [balance, setBalance] = useState([]);
+  const [appointments, setAppointments] = useState([]);
+  const [insurance, setInsurance] = useState([]);
+  const [apptId, setApptId] = useState();
   const handleUpdatePatient = async (patient_id, dataToUpdate) => {
     try {
       await axios.put(`${BASE_API_URL}/v1/patient/${patient_id}`, dataToUpdate);
@@ -55,6 +61,16 @@ const AppRoutes = () => {
         handleUpdatePatient,
         patientId,
         setPatientId,
+        setFilteredData,
+        filteredData,
+        setBalance,
+        balance,
+        appointments,
+        setAppointments,
+        insurance,
+        setInsurance,
+        setApptId,
+        apptId,
       }}
     >
       <Routes>
@@ -66,6 +82,8 @@ const AppRoutes = () => {
         <Route path="/step-five" element={<StepFive />} />
         <Route path="/step-six" element={<StepSix />} />
         <Route path="*" element={<Navigate to="/" />} />
+        <Route path="/basicInfo" element={<BasicInfo />} />
+        <Route path="/appointments" element={<Appointment />} />
       </Routes>
     </DataContext.Provider>
   );

@@ -14,27 +14,27 @@ const PatientsList = ({ filteredData, setFilteredData }) => {
   const { setData, setIsReadOnly, setStep, setIsEdit, setPatientId } =
     useContext(DataContext);
 
-  // const handleViewDetailsClick = async (patient_id, selectedOption) => {
-  //   try {
-  //     setPatientId(patient_id);
-  //     const { data: details } = await axios.get(
-  //       `${BASE_API_URL}/v1/patient/${patient_id}`
-  //     );
-  //     // const { data: details } = await axios.get(`/patient.json`);
-  //     setData(details);
-  //     setStep(1);
-  //     if (selectedOption === "view") {
-  //       setIsEdit(false);
-  //       setIsReadOnly(true);
-  //     } else if (selectedOption === "edit") {
-  //       setIsReadOnly(false);
-  //       setIsEdit(true);
-  //     }
-  //     navigate("/step-one");
-  //   } catch (error) {
-  //     console.log("error while viewing details. Try again later.");
-  //   }
-  // };
+  const handleViewDetailsClick = async (patient_id, selectedOption) => {
+    try {
+      setPatientId(patient_id);
+      // const { data: details } = await axios.get(
+      //   `${BASE_API_URL}/v1/patient/${patient_id}`
+      // );
+      // const { data: details } = await axios.get(`/patient.json`);
+      //   setData(details);
+      setStep(1);
+      if (selectedOption === "view") {
+        setIsEdit(false);
+        setIsReadOnly(true);
+      } else if (selectedOption === "edit") {
+        setIsReadOnly(false);
+        setIsEdit(true);
+      }
+      navigate("/basicInfo");
+    } catch (error) {
+      console.log("error while viewing details. Try again later.");
+    }
+  };
 
   // const handleDeleteClick = async (patient_id, motherName) => {
   //   const response = window.confirm(
@@ -62,8 +62,8 @@ const PatientsList = ({ filteredData, setFilteredData }) => {
     <div className="patients-list">
       {successMsg && <Alert variant="success">{successMsg}</Alert>}
       {errorMsg && <Alert variant="danger">{errorMsg}</Alert>}
-      <Table striped bordered hover responsive>
-        <thead>
+      <Table style={{ textAlign: "center" }}>
+        <thead className="bg-secondary text-white">
           <tr>
             <th>Patient ID</th>
             <th>First Name</th>
@@ -71,41 +71,26 @@ const PatientsList = ({ filteredData, setFilteredData }) => {
             <th>Suffix</th>
             <th>Countrycode</th>
             <th>View</th>
-            <th>Edit</th>
-            <th>Delete</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="bg-light text-dark">
           {filteredData.map((patient, index) => {
-            const [patientid, firstName, lastName, suffix, countrycode] =
-              patient || [];
+            const { patient_id, firstname, lastname, suffix, countrycode } =
+              patient || {};
 
             return (
               <tr key={index}>
-                <td>{patientid}</td>
-                <td>{firstName}</td>
-                <td>{lastName}</td>
+                <td>{patient_id}</td>
+                <td>{firstname}</td>
+                <td>{lastname}</td>
                 <td>{suffix}</td>
                 <td>{countrycode}</td>
                 <td className="icon">
                   <AiOutlineEye
+                    color="black"
                     size={30}
                     className="icon"
-                    //  onClick={() => handleViewDetailsClick(patient_id, "view")}
-                  />
-                </td>
-                <td className="icon">
-                  <AiOutlineEdit
-                    size={30}
-                    className="icon"
-                    // onClick={() => handleViewDetailsClick(patient_id, "edit")}
-                  />
-                </td>
-                <td className="icon">
-                  <AiOutlineDelete
-                    size={30}
-                    className="icon"
-                    // onClick={() => handleDeleteClick(patient_id, motherName)}
+                    onClick={() => handleViewDetailsClick(patient_id, "view")}
                   />
                 </td>
               </tr>

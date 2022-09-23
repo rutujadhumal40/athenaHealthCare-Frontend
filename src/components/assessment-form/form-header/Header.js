@@ -27,7 +27,7 @@ const Header = () => {
   return (
     <div className="form-header">
       <h2>
-        <Link to="/">Postpartum Assessment Form</Link>
+        <Link to="/">Patient Registeration Form</Link>
       </h2>
     </div>
   );

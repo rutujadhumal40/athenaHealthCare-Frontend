@@ -10,11 +10,18 @@ import PatientsList from "../patients-list/PatientsList";
 import "./home.css";
 
 const Home = () => {
-  const { setStep, setData, setIsReadOnly, setIsEdit } =
-    useContext(DataContext);
+  const {
+    setStep,
+    setData,
+    setIsReadOnly,
+    setIsEdit,
+    filteredData,
+    setFilteredData,
+    patientId,
+    setBalance,
+  } = useContext(DataContext);
   const [searchText, setSearchText] = useState("");
   const [userData, setUserData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -22,38 +29,69 @@ const Home = () => {
   useEffect(() => {
     const getUserData = async () => {
       try {
-        setLoading(true);
+        //setLoading(true);
         const { data: details } = await axios.get(
           `http://localhost:5000/getData`
         );
-        // const { data: details } = await axios.get(`/patients.json`);
-        console.log("DEtails", details);
-        setUserData(details);
+       // const { data: details } = await axios.get(`/patients.json`);
+       console.log("Details" , details);
         setFilteredData(details);
+        // setFilteredData([
+        //   {
+        //     patient_id: "1",
+        //     suffix: "Ms.",
+        //     firstname: "Rutuja",
+        //     lastname: "Dhumal",
+        //     countrycode: "US",
+        //     state: "NY",
+        //     homephone: "123",
+        //     mobilephone: "123",
+        //     zip: "123",
+        //     dob: "12/03/1996",
+        //     department_id: "1",
+        //     status: "active",
+        //   },
+        // ]);
       } catch (error) {
       } finally {
-        setLoading(false);
+      //  setLoading(false);
       }
     };
+
+    // const getBalanceData = async () => {
+    //   try {
+    //     setLoading(true);
+    //     const { data: details } = await axios.get(
+    //       `http://localhost:5000/getBalance/${patientId}`
+    //     );
+    //     // const { data: details } = await axios.get(`/patients.json`);
+    //     console.log("BALANCE", details);
+    //     setBalance(details);
+    //   } catch (error) {
+    //   } finally {
+    //     setLoading(false);
+    //   }
+    // };
     getUserData();
+    //getBalanceData();
   }, []);
 
-  const handleOnChange = (event) => {
-    const text = event.target.value.trim();
-    setSearchText(text);
-    if (text !== "") {
-      setFilteredData(
-        userData.filter(
-          (patient) =>
-            patient?.motherName.toLowerCase().indexOf(text.toLowerCase()) >
-              -1 ||
-            patient?.phone.toLowerCase().indexOf(text.toLowerCase()) > -1
-        )
-      );
-    } else {
-      setFilteredData(userData);
-    }
-  };
+  // const handleOnChange = (event) => {
+  //   const text = event.target.value.trim();
+  //   setSearchText(text);
+  //   if (text !== "") {
+  //     setFilteredData(
+  //       userData.filter(
+  //         (patient) =>
+  //           patient?.motherName.toLowerCase().indexOf(text.toLowerCase()) >
+  //             -1 ||
+  //           patient?.phone.toLowerCase().indexOf(text.toLowerCase()) > -1
+  //       )
+  //     );
+  //   } else {
+  //     setFilteredData(userData);
+  //   }
+  // };
 
   return (
     <>
@@ -61,16 +99,16 @@ const Home = () => {
       <div className="home-page container">
         <div className="header-section">
           <Form.Group className="search-box">
-            <Form.Control
+            {/* <Form.Control
               type="search"
               placeholder="Register Patient"
               value={searchText}
               onChange={handleOnChange}
-            />
+            /> */}
           </Form.Group>
           <Button
-            variant="primary"
-            className="btn"
+            //variant="primary"
+            className="btn bg-warning text-dark"
             onClick={() => {
               setStep(1);
               setIsReadOnly(false);
@@ -79,7 +117,7 @@ const Home = () => {
               navigate("/step-one");
             }}
           >
-            Add New
+            Register Patient
           </Button>
         </div>
         {loading ? (

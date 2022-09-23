@@ -38,7 +38,7 @@ const StepOne = () => {
   const handleFormSubmit = async (values) => {
     console.log("VALUES", values);
     //values = { ...values, patient_id: "41590" };
-    await axios.post(`http://localhost:5000/addPatientAthena`, {
+    axios.post(`http://localhost:5000/addPatientAthena`, {
       values,
     });
     // setData((prev) => ({
@@ -53,8 +53,8 @@ const StepOne = () => {
   return (
     <div>
       <Header />
-      <Stepper step={step} />
-      <div className="step-form container step-one">
+      {/* <Stepper step={step} /> */}
+      <div className="step-form container step-one" >
         <Form onSubmit={handleSubmit(handleFormSubmit)}>
           <Form.Group className="mb-3" controlId="motherName">
             <Form.Label>Suffix</Form.Label>
@@ -71,7 +71,7 @@ const StepOne = () => {
           <Row>
             <Col>
               <Form.Group className="mb-3" controlId="babyName">
-                <Form.Label>Baby's Name</Form.Label>
+                <Form.Label>First Name</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Enter first name"
@@ -122,7 +122,7 @@ const StepOne = () => {
             </Col>
             <Col>
               <Form.Group className="mb-3" controlId="babyDOB">
-                <Form.Label>state</Form.Label>
+                <Form.Label>State</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Enter your last name"
@@ -236,7 +236,7 @@ const StepOne = () => {
             </Form.Group>
           </fieldset> */}
           <Button type="submit" className="btn">
-            {NEXT_BUTTON_TEXT}
+            Submit
           </Button>
         </Form>
       </div>
