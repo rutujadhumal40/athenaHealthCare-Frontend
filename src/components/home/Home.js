@@ -37,7 +37,7 @@ const Home = () => {
         // const { data: details } = await axios.get(`/patients.json`);
         console.log("Details", details);
         setUserData(details);
-        // setFilteredData([            
+        // setFilteredData([
         //   {
         //     patient_id: "1",
         //     suffix: "Ms.",
@@ -104,14 +104,14 @@ const Home = () => {
           <Form.Group className="search-box">
             <Form.Control
               type="search"
-              placeholder="Register Patient"
+              placeholder="Find Patients"
               value={searchText}
               onChange={handleOnChange}
             />
           </Form.Group>
           <Button
             //variant="primary"
-            className="btn bg-warning text-dark"
+            //className="btn bg-warning text-dark"
             onClick={() => {
               setStep(1);
               setIsReadOnly(false);

@@ -35,7 +35,7 @@ function PatientStepper(props) {
     <>
       <div>
         <Link to={step >= 1 ? "/" : ""}>
-          <AiFillHome color="blue" size={30} className="home" />
+          <AiFillHome color="#5A84C3" size={30} className="home" />
         </Link>
         <form id="msform">
           <ul id="progressbar">

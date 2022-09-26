@@ -6,9 +6,7 @@ import axios from "axios";
 import DataContext from "../../../context/DataContext";
 const PatientModal = (props) => {
   const { show, setShow, appointments, modalData, apptId } = props;
-  const { setInsurance, insurance,patientName } = useContext(DataContext);
-
-  
+  const { setInsurance, insurance, patientName } = useContext(DataContext);
 
   const handleClose = () => setShow(false);
   useEffect(() => {
@@ -50,7 +48,7 @@ const PatientModal = (props) => {
           >
             <thead className="bg-secondary text-white">
               <tr>
-                <th>ProviderID</th>
+                {/* <th>ProviderID</th> */}
                 <th>StartTime</th>
                 <th>Duration</th>
                 <th>Date</th>
@@ -63,9 +61,9 @@ const PatientModal = (props) => {
 
                 return (
                   <tr key={index}>
-                    <td>{providerid}</td>
+                    {/* <td>{providerid}</td> */}
                     <td>{starttime}</td>
-                    <td>{duration}</td>
+                    <td>{duration} mins</td>
                     <td>{date}</td>
                   </tr>
                 );
@@ -98,8 +96,6 @@ const PatientModal = (props) => {
                 <th>Issue Date</th>
                 <th>Expiration Date</th>
                 <th>Eligibility Status</th>
-
-
               </tr>
             </thead>
             <tbody className="bg-light text-dark">
@@ -115,7 +111,7 @@ const PatientModal = (props) => {
                   insurancepolicyholdercountrycode,
                   insurancepolicyholderstate,
                   insurancepolicyholdercity,
-                  eligibilitystatus
+                  eligibilitystatus,
                 } = item || {};
 
                 return (
@@ -131,7 +127,6 @@ const PatientModal = (props) => {
                     <td>{issuedate}</td>
                     <td>{expirationdate}</td>
                     <td>{eligibilitystatus}</td>
-
                   </tr>
                 );
               })}
