@@ -25,7 +25,7 @@ const BasicInfo = () => {
     step,
     setBalance,
     balance,
-    setLoading,
+    patientName,
   } = useContext(DataContext);
 
   const {
@@ -106,7 +106,7 @@ const BasicInfo = () => {
               <th>Mobile Phone</th>
               <th>ZIP</th>
               <th>DOB</th>
-              <th>Department Id</th>
+              {/* <th>Department Id</th> */}
               <th>Status</th>
             </tr>
           </thead>
@@ -127,7 +127,7 @@ const BasicInfo = () => {
                   <td>{mobilephone}</td>
                   <td>{zip}</td>
                   <td>{dob}</td>
-                  <td>{department_id}</td>
+                  {/* <td>{department_id}</td> */}
                   <td>{status}</td>
 
                   {/* <td className="icon">
@@ -160,10 +160,10 @@ const BasicInfo = () => {
         >
           <thead className="bg-secondary text-white">
             <tr>
-              <th>Patient ID</th>
+              <th>Patient Name</th>
               <th>Balance</th>
               <th>Clean Balance</th>
-              <th>Provider Group ID</th>
+              {/* <th>Provider Group ID</th> */}
             </tr>
           </thead>
           <tbody className="bg-light text-dark">
@@ -173,10 +173,10 @@ const BasicInfo = () => {
 
               return (
                 <tr key={index}>
-                  <td>{patient_id}</td>
+                  <td>{patientName}</td>
                   <td>{balance}</td>
                   <td>{cleanbalance ? 'true' : 'false'}</td>
-                  <td>{providergroupid}</td>
+                  {/* <td>{providergroupid}</td> */}
 
                   {/* <td className="icon">
                   <AiOutlineEdit

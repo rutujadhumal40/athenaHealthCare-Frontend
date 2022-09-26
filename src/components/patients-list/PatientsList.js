@@ -11,12 +11,25 @@ const PatientsList = ({ filteredData, setFilteredData }) => {
   const navigate = useNavigate();
   const [successMsg, setSuccessMsg] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  const { setData, setIsReadOnly, setStep, setIsEdit, setPatientId } =
-    useContext(DataContext);
+  const {
+    setData,
+    setIsReadOnly,
+    setStep,
+    setIsEdit,
+    setPatientId,
+    setPatientName,
+    setShowTable,
+    showTable,
+  } = useContext(DataContext);
 
-  const handleViewDetailsClick = async (patient_id, selectedOption) => {
+  const handleViewDetailsClick = async (
+    patient_id,
+    firstname,
+    selectedOption
+  ) => {
     try {
       setPatientId(patient_id);
+      setPatientName(firstname);
       // const { data: details } = await axios.get(
       //   `${BASE_API_URL}/v1/patient/${patient_id}`
       // );
@@ -57,47 +70,51 @@ const PatientsList = ({ filteredData, setFilteredData }) => {
   //     }
   //   }
   // };
-
+  console.log('filteredData' ,filteredData);
   return (
     <div className="patients-list">
       {successMsg && <Alert variant="success">{successMsg}</Alert>}
       {errorMsg && <Alert variant="danger">{errorMsg}</Alert>}
-      <Table style={{ textAlign: "center" }}>
-        <thead className="bg-secondary text-white">
-          <tr>
-            <th>Patient ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Suffix</th>
-            <th>Countrycode</th>
-            <th>View</th>
-          </tr>
-        </thead>
-        <tbody className="bg-light text-dark">
-          {filteredData.map((patient, index) => {
-            const { patient_id, firstname, lastname, suffix, countrycode } =
-              patient || {};
+      {showTable && (
+        <Table style={{ textAlign: "center" }}>
+          <thead className="bg-secondary text-white">
+            <tr>
+              <th>Suffix</th>
+              {/* <th>Patient ID</th> */}
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Countrycode</th>
+              <th>View</th>
+            </tr>
+          </thead>
+          <tbody className="bg-light text-dark">
+            {filteredData.map((patient, index) => {
+              const { patient_id, firstname, lastname, suffix, countrycode } =
+                patient || {};
 
-            return (
-              <tr key={index}>
-                <td>{patient_id}</td>
-                <td>{firstname}</td>
-                <td>{lastname}</td>
-                <td>{suffix}</td>
-                <td>{countrycode}</td>
-                <td className="icon">
-                  <AiOutlineEye
-                    color="black"
-                    size={30}
-                    className="icon"
-                    onClick={() => handleViewDetailsClick(patient_id, "view")}
-                  />
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
+              return (
+                <tr key={index}>
+                  {/* <td>{patient_id}</td> */}
+                  <td>{suffix}</td>
+                  <td>{firstname}</td>
+                  <td>{lastname}</td>
+                  <td>{countrycode}</td>
+                  <td className="icon">
+                    <AiOutlineEye
+                      color="black"
+                      size={30}
+                      className="icon"
+                      onClick={() =>
+                        handleViewDetailsClick(patient_id, firstname, "view")
+                      }
+                    />
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
+      )}
     </div>
   );
 };

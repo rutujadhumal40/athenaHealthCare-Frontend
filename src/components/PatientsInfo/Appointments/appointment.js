@@ -28,6 +28,7 @@ const Appointment = () => {
     setLoading,
     setApptId,
     apptId,
+    patientName,
   } = useContext(DataContext);
 
   const [show, setShow] = useState(false);
@@ -121,7 +122,7 @@ const Appointment = () => {
       <PatientStepper step={step} />
       <div className="step-form container step-three">
         <h5 style={{ marginBottom: "20px", textAlign: "center" }}>
-          Appointments List for PatientID {patientId}
+          Appointments List for {patientName}
         </h5>
         {/* <div className="patients-list"> */}
         {/* {successMsg && <Alert variant="success">{successMsg}</Alert>}
@@ -135,9 +136,9 @@ const Appointment = () => {
         >
           <thead className="bg-secondary text-white">
             <tr>
-              <th>Patient ID</th>
-              <th>Appointment ID</th>
-              <th>Department ID</th>
+              <th>Patient Name</th>
+              {/* <th>Appointment ID</th> */}
+              <th>Department Name</th>
               <th>Appointment Type</th>
               <th>View details</th>
             </tr>
@@ -157,8 +158,8 @@ const Appointment = () => {
 
               return (
                 <tr key={index}>
-                  <td>{patientid}</td>
-                  <td>{appointmentid}</td>
+                  <td>{patientName}</td>
+                  {/* <td>{appointmentid}</td> */}
                   <td>{departmentid}</td>
                   <td>{appointmenttype}</td>
                   <td className="icon">
@@ -183,6 +184,7 @@ const Appointment = () => {
           modalData={modalData}
           insurance={insurance}
           apptId={apptId}
+          patientName={patientName}
         />
       )}
     </>

@@ -19,6 +19,7 @@ const Home = () => {
     setFilteredData,
     patientId,
     setBalance,
+    setShowTable,
   } = useContext(DataContext);
   const [searchText, setSearchText] = useState("");
   const [userData, setUserData] = useState([]);
@@ -33,10 +34,10 @@ const Home = () => {
         const { data: details } = await axios.get(
           `http://localhost:5000/getData`
         );
-       // const { data: details } = await axios.get(`/patients.json`);
-       console.log("Details" , details);
-        setFilteredData(details);
-        // setFilteredData([
+        // const { data: details } = await axios.get(`/patients.json`);
+        console.log("Details", details);
+        setUserData(details);
+        // setFilteredData([            
         //   {
         //     patient_id: "1",
         //     suffix: "Ms.",
@@ -54,7 +55,7 @@ const Home = () => {
         // ]);
       } catch (error) {
       } finally {
-      //  setLoading(false);
+        //  setLoading(false);
       }
     };
 
@@ -76,22 +77,24 @@ const Home = () => {
     //getBalanceData();
   }, []);
 
-  // const handleOnChange = (event) => {
-  //   const text = event.target.value.trim();
-  //   setSearchText(text);
-  //   if (text !== "") {
-  //     setFilteredData(
-  //       userData.filter(
-  //         (patient) =>
-  //           patient?.motherName.toLowerCase().indexOf(text.toLowerCase()) >
-  //             -1 ||
-  //           patient?.phone.toLowerCase().indexOf(text.toLowerCase()) > -1
-  //       )
-  //     );
-  //   } else {
-  //     setFilteredData(userData);
-  //   }
-  // };
+  const handleOnChange = (event) => {
+    console.log("filteredData", filteredData);
+
+    const text = event.target.value.trim();
+    setSearchText(text);
+    if (text !== "") {
+      setFilteredData(
+        userData.filter(
+          (patient) =>
+            patient?.firstname.toLowerCase().indexOf(text.toLowerCase()) > -1 ||
+            patient?.lastname.toLowerCase().indexOf(text.toLowerCase()) > -1
+        )
+      );
+      setShowTable(true);
+    } else {
+      setFilteredData(filteredData);
+    }
+  };
 
   return (
     <>
@@ -99,12 +102,12 @@ const Home = () => {
       <div className="home-page container">
         <div className="header-section">
           <Form.Group className="search-box">
-            {/* <Form.Control
+            <Form.Control
               type="search"
               placeholder="Register Patient"
               value={searchText}
               onChange={handleOnChange}
-            /> */}
+            />
           </Form.Group>
           <Button
             //variant="primary"

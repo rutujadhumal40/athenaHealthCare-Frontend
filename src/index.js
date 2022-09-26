@@ -36,6 +36,8 @@ const AppRoutes = () => {
   const [appointments, setAppointments] = useState([]);
   const [insurance, setInsurance] = useState([]);
   const [apptId, setApptId] = useState();
+  const [patientName, setPatientName] = useState("");
+  const [showTable, setShowTable] = useState(false);
   const handleUpdatePatient = async (patient_id, dataToUpdate) => {
     try {
       await axios.put(`${BASE_API_URL}/v1/patient/${patient_id}`, dataToUpdate);
@@ -50,6 +52,8 @@ const AppRoutes = () => {
   return (
     <DataContext.Provider
       value={{
+        setPatientName,
+        patientName,
         data,
         setData,
         step,
@@ -71,6 +75,8 @@ const AppRoutes = () => {
         setInsurance,
         setApptId,
         apptId,
+        setShowTable,
+        showTable,
       }}
     >
       <Routes>

@@ -6,7 +6,9 @@ import axios from "axios";
 import DataContext from "../../../context/DataContext";
 const PatientModal = (props) => {
   const { show, setShow, appointments, modalData, apptId } = props;
-  const { setInsurance, insurance } = useContext(DataContext);
+  const { setInsurance, insurance,patientName } = useContext(DataContext);
+
+  
 
   const handleClose = () => setShow(false);
   useEffect(() => {
@@ -36,7 +38,7 @@ const PatientModal = (props) => {
           closeButton
           style={{ borderBottom: "none", marginBottom: "0px" }}
         >
-          <Modal.Title>Appointment Details for {apptId}</Modal.Title>
+          <Modal.Title>Appointment Details for {patientName}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Table
@@ -85,34 +87,51 @@ const PatientModal = (props) => {
           >
             <thead className="bg-secondary text-white">
               <tr>
-                <th>InsuranceID</th>
-                <th>policynumber</th>
-                <th>issuedate</th>
-                <th>insurancephone</th>
-                <th>insurancepolicyholder</th>
-                <th>expirationdate</th>
+                <th>Insurance Name</th>
+                <th>Insurance Type</th>
+                {/* <th>Policy Number</th> */}
+                {/* <th>Insurance Phone</th> */}
+                <th>Insurance Policyholder</th>
+                <th>Country</th>
+                <th>State</th>
+                <th>City</th>
+                <th>Issue Date</th>
+                <th>Expiration Date</th>
+                <th>Eligibility Status</th>
+
 
               </tr>
             </thead>
             <tbody className="bg-light text-dark">
               {insurance.map((item, index) => {
                 const {
-                  insuranceid,
+                  insuranceplanname,
                   policynumber,
                   issuedate,
                   insurancephone,
                   insurancepolicyholder,
-                  expirationdate
+                  expirationdate,
+                  insurancetype,
+                  insurancepolicyholdercountrycode,
+                  insurancepolicyholderstate,
+                  insurancepolicyholdercity,
+                  eligibilitystatus
                 } = item || {};
 
                 return (
                   <tr key={index}>
-                    <td>{insuranceid}</td>
-                    <td>{policynumber}</td>
-                    <td>{issuedate}</td>
-                    <td>{insurancephone}</td>
+                    <td>{insuranceplanname}</td>
+                    <td>{insurancetype}</td>
+                    {/* <td>{policynumber}</td> */}
+                    {/* <td>{insurancephone}</td> */}
                     <td>{insurancepolicyholder}</td>
+                    <td>{insurancepolicyholdercountrycode}</td>
+                    <td>{insurancepolicyholderstate}</td>
+                    <td>{insurancepolicyholdercity}</td>
+                    <td>{issuedate}</td>
                     <td>{expirationdate}</td>
+                    <td>{eligibilitystatus}</td>
+
                   </tr>
                 );
               })}
