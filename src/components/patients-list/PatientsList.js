@@ -1,25 +1,24 @@
-import axios from "axios";
 import { useContext, useState } from "react";
 import { Alert, Table } from "react-bootstrap";
-import { AiOutlineDelete, AiOutlineEdit, AiOutlineEye } from "react-icons/ai";
+import { AiOutlineEye } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import DataContext from "../../context/DataContext";
-import { BASE_API_URL } from "../../utils/constants";
 import "./patientslist.css";
 
-const PatientsList = ({ filteredData, setFilteredData }) => {
+const PatientsList = ({ filteredData }) => {
   const navigate = useNavigate();
-  const [successMsg, setSuccessMsg] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
+
   const {
-    setData,
     setIsReadOnly,
     setStep,
     setIsEdit,
     setPatientId,
     setPatientName,
-    setShowTable,
     showTable,
+    setDeptId,
+    setIsExistingPatient,
+    setpatientIdforAppt,
+    isExistingPatient,
   } = useContext(DataContext);
 
   const handleViewDetailsClick = async (
@@ -49,6 +48,19 @@ const PatientsList = ({ filteredData, setFilteredData }) => {
     }
   };
 
+  const handleClick = async (department_id, patient_id, firstname, text) => {
+    console.log("department_id", isExistingPatient, department_id, patient_id);
+    setIsExistingPatient(true);
+    setpatientIdforAppt(patient_id);
+    setDeptId(department_id);
+    setPatientId(patient_id);
+    setPatientName(firstname);
+    if (text === "book") {
+      navigate("/step-two");
+    } else {
+      navigate("/appointments");
+    }
+  };
   // const handleDeleteClick = async (patient_id, motherName) => {
   //   const response = window.confirm(
   //     `Are you sure you want to delete patient data for mother name ${motherName}?`
@@ -70,31 +82,35 @@ const PatientsList = ({ filteredData, setFilteredData }) => {
   //     }
   //   }
   // };
-  console.log('filteredData' ,filteredData);
+  console.log("filteredData", filteredData);
   return (
     <div className="patients-list">
-      {successMsg && <Alert variant="success">{successMsg}</Alert>}
-      {errorMsg && <Alert variant="danger">{errorMsg}</Alert>}
       {showTable && (
         <Table style={{ textAlign: "center" }}>
           <thead className="bg-secondary text-white">
             <tr>
               <th>Suffix</th>
-              {/* <th>Patient ID</th> */}
               <th>First Name</th>
               <th>Last Name</th>
               <th>Countrycode</th>
               <th>View</th>
+              <th>View Appointment</th>
+              <th>Book Appointment</th>
             </tr>
           </thead>
           <tbody className="bg-light text-dark">
             {filteredData.map((patient, index) => {
-              const { patient_id, firstname, lastname, suffix, countrycode } =
-                patient || {};
+              const {
+                department_id,
+                patient_id,
+                firstname,
+                lastname,
+                suffix,
+                countrycode,
+              } = patient || {};
 
               return (
                 <tr key={index}>
-                  {/* <td>{patient_id}</td> */}
                   <td>{suffix}</td>
                   <td>{firstname}</td>
                   <td>{lastname}</td>
@@ -108,6 +124,48 @@ const PatientsList = ({ filteredData, setFilteredData }) => {
                         handleViewDetailsClick(patient_id, firstname, "view")
                       }
                     />
+                  </td>
+                  <td className="icon">
+                    <button
+                      style={{
+                        width: "140px",
+                        backgroundColor: "#5A84C3",
+                        color: "white",
+                        border: "0px",
+                        borderRadius: "10px",
+                      }}
+                      onClick={() =>
+                        handleClick(
+                          department_id,
+                          patient_id,
+                          firstname,
+                          "view"
+                        )
+                      }
+                    >
+                      View
+                    </button>
+                  </td>
+                  <td className="icon">
+                    <button
+                      style={{
+                        width: "140px",
+                        backgroundColor: "#5A84C3",
+                        color: "white",
+                        border: "0px",
+                        borderRadius: "10px",
+                      }}
+                      onClick={() =>
+                        handleClick(
+                          department_id,
+                          patient_id,
+                          firstname,
+                          "book"
+                        )
+                      }
+                    >
+                      Book
+                    </button>
                   </td>
                 </tr>
               );

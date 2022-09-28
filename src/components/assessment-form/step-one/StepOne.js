@@ -1,60 +1,90 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import DataContext from "../../../context/DataContext";
-import {
-  ATLEAST_ONE_SELECT,
-  NEXT_BUTTON_TEXT,
-  REQUIRED_ERROR_MSG,
-  VALID_PHONE_NUMBER,
-} from "../../../utils/constants";
-import { getConvertedDate } from "../../../utils/functions";
+import { REQUIRED_ERROR_MSG } from "../../../utils/constants";
 import Stepper from "../../stepper/Stepper";
 import Header from "../form-header/Header";
 import "./stepone.css";
-import axios from "axios";
 
 const StepOne = () => {
+  const [loading, setLoading] = useState(false);
+  const [value, setValue] = useState("fruit");
+
   const navigate = useNavigate();
-  const { data, setData, step, isReadOnly, isEdit } = useContext(DataContext);
+  const {
+    setStep,
+    step,
+    isReadOnly,
+    isEdit,
+    departments,
+    deptId,
+    setDeptId,
+    setpatientIdforAppt,
+  } = useContext(DataContext);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      suffix: data?.patientBasicInfo?.suffix,
-      first_name: data?.patientBasicInfo?.first_name,
-      last_name: data?.patientBasicInfo?.last_name,
-      country_code: data?.patientBasicInfo?.country_code,
-      zip: data?.patientBasicInfo?.zip,
-      dob: data?.patientBasicInfo?.dob,
-      department_id: data?.patientBasicInfo?.department_id,
-      status: data?.patientBasicInfo?.status,
-    },
-  });
+  } = useForm({});
 
   const handleFormSubmit = async (values) => {
-    console.log("VALUES", values);
-    //values = { ...values, patient_id: "41590" };
-    axios.post(`http://localhost:5000/addPatientAthena`, {
-      values,
-    });
-    // setData((prev) => ({
-    //   ...prev,
-    //   patientBasicInfo: {
-    //     ...values,
-    //   },
-    // }));
+    values = { ...values, department_id: deptId };
+    try {
+      setLoading(true);
+      // const resData = await axios.post(
+      //   `http://localhost:5000/addPatientAthena`,
+      //   {
+      //     values,
+      //   }
+      // );
+      // console.log("DATA INSIDE SUBMIT", resData.data.patient_id);
+      setpatientIdforAppt(1);
+      // setIdforAppt(resData.data.patient_id);
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
     navigate("/step-two");
+    setStep(2);
   };
-  console.log("DATA", data);
-  return (
+
+  const handleChange = (event) => {
+    const data = departments.filter(
+      (item) => item.department_name === event.target.value
+    );
+    setDeptId(data[0].department_id);
+    setValue(event.target.value);
+  };
+
+  const Dropdown = ({ label, value, options, onChange }) => {
+    return (
+      <label>
+        {label}
+        <select
+          style={{ marginLeft: "78px" }}
+          value={value}
+          onChange={onChange}
+        >
+          {options.map((option, index) => {
+            return (
+              <option key={index} value={option.value}>
+                {option.department_name}
+              </option>
+            );
+          })}
+        </select>
+      </label>
+    );
+  };
+  return loading ? (
+    <>Loading ...</>
+  ) : (
     <div>
       <Header />
-      {/* <Stepper step={step} /> */}
-      <div className="step-form container step-one" >
+      <Stepper step={step} />
+      <div className="step-form container step-one">
         <Form onSubmit={handleSubmit(handleFormSubmit)}>
           <Form.Group className="mb-3" controlId="motherName">
             <Form.Label>Suffix</Form.Label>
@@ -131,9 +161,6 @@ const StepOne = () => {
                   })}
                   disabled={isReadOnly || isEdit}
                 />
-                {/* {errors.state && (
-                  <p className="errorMsg">{REQUIRED_ERROR_MSG}</p>
-                )} */}
               </Form.Group>
             </Col>
           </Row>
@@ -149,9 +176,6 @@ const StepOne = () => {
                       required: true,
                     })}
                   />
-                  {/* {errors.zip && (
-                    <p className="errorMsg">{REQUIRED_ERROR_MSG}</p>
-                  )} */}
                 </Form.Group>
               </fieldset>
             </Col>
@@ -169,9 +193,6 @@ const StepOne = () => {
                   {errors.dob && (
                     <p className="errorMsg">{REQUIRED_ERROR_MSG}</p>
                   )}
-                  {/* {errors.phone && errors.phone.type === "pattern" && (
-                    <p className="errorMsg">{VALID_PHONE_NUMBER}</p>
-                  )} */}
                 </Form.Group>
               </fieldset>
             </Col>
@@ -181,17 +202,12 @@ const StepOne = () => {
             <Col>
               <fieldset disabled={isReadOnly || isEdit}>
                 <Form.Group className="mb-3" controlId="department_id">
-                  <Form.Label>Department ID</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter department_id"
-                    {...register("department_id", {
-                      required: true,
-                    })}
+                  <Dropdown
+                    label="Department Name"
+                    options={departments}
+                    value={value}
+                    onChange={handleChange}
                   />
-                  {/* {errors.department_id && (
-                    <p className="errorMsg">{REQUIRED_ERROR_MSG}</p>
-                  )} */}
                 </Form.Group>
               </fieldset>
             </Col>
@@ -206,35 +222,11 @@ const StepOne = () => {
                       required: true,
                     })}
                   />
-                  {/* {errors.status && (
-                    <p className="errorMsg">{REQUIRED_ERROR_MSG}</p>
-                  )} */}
                 </Form.Group>
               </fieldset>
             </Col>
           </Row>
-          {/* <fieldset disabled={isReadOnly || isEdit}>
-            <Form.Group className="mb-3 baby-gender" controlId="babyGender">
-              <Form.Label>Baby's Gender</Form.Label>
-              <Form.Check
-                type="radio"
-                label="M"
-                value="M"
-                {...register("babyGender", {
-                  required: true,
-                })}
-              />
-              <Form.Check
-                type="radio"
-                label="F"
-                value="F"
-                {...register("babyGender", { required: true })}
-              />
-              {errors.babyGender && (
-                <p className="errorMsg">{ATLEAST_ONE_SELECT}</p>
-              )}
-            </Form.Group>
-          </fieldset> */}
+
           <Button type="submit" className="btn">
             Submit
           </Button>

@@ -12,6 +12,7 @@ import StepFive from "./components/assessment-form/stepFive/StepFive";
 import Home from "./components/home/Home";
 import Appointment from "./components/PatientsInfo/Appointments/appointment";
 import BasicInfo from "./components/PatientsInfo/BasicInfo/BasicInfo";
+import Stepper from "./components/stepper/Stepper";
 import DataContext from "./context/DataContext";
 import "./index.css";
 import { BASE_API_URL } from "./utils/constants";
@@ -36,8 +37,15 @@ const AppRoutes = () => {
   const [appointments, setAppointments] = useState([]);
   const [insurance, setInsurance] = useState([]);
   const [apptId, setApptId] = useState();
+  const [deptId, setDeptId] = useState();
+  const [patientIdForAppt, setpatientIdforAppt] = useState();
+  const [departments, setDepartments] = useState([]);
   const [patientName, setPatientName] = useState("");
   const [showTable, setShowTable] = useState(false);
+  const [appointmentId, setAppointmentId] = useState();
+  const [openAppt, setOpenAppt] = useState([]);
+  const [isExistingPatient, setIsExistingPatient] = useState(false);
+
   const handleUpdatePatient = async (patient_id, dataToUpdate) => {
     try {
       await axios.put(`${BASE_API_URL}/v1/patient/${patient_id}`, dataToUpdate);
@@ -77,6 +85,18 @@ const AppRoutes = () => {
         apptId,
         setShowTable,
         showTable,
+        departments,
+        setDepartments,
+        deptId,
+        setDeptId,
+        patientIdForAppt,
+        setpatientIdforAppt,
+        appointmentId,
+        setAppointmentId,
+        openAppt,
+        setOpenAppt,
+        isExistingPatient,
+        setIsExistingPatient,
       }}
     >
       <Routes>

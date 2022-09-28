@@ -3,7 +3,6 @@ import { useContext, useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import DataContext from "../../context/DataContext";
-import { BASE_API_URL } from "../../utils/constants";
 import { initialState } from "../../utils/initialstate";
 import Header from "../header/Header";
 import PatientsList from "../patients-list/PatientsList";
@@ -20,6 +19,7 @@ const Home = () => {
     patientId,
     setBalance,
     setShowTable,
+    departments, setDepartments
   } = useContext(DataContext);
   const [searchText, setSearchText] = useState("");
   const [userData, setUserData] = useState([]);
@@ -59,22 +59,22 @@ const Home = () => {
       }
     };
 
-    // const getBalanceData = async () => {
-    //   try {
-    //     setLoading(true);
-    //     const { data: details } = await axios.get(
-    //       `http://localhost:5000/getBalance/${patientId}`
-    //     );
-    //     // const { data: details } = await axios.get(`/patients.json`);
-    //     console.log("BALANCE", details);
-    //     setBalance(details);
-    //   } catch (error) {
-    //   } finally {
-    //     setLoading(false);
-    //   }
-    // };
+    const getDeptData = async () => {
+      try {
+        //setLoading(true);
+        const { data: details } = await axios.get(
+          `http://localhost:5000/getDepartments`
+        );
+        // const { data: details } = await axios.get(`/patients.json`);
+        console.log("Details", details);
+        setDepartments(details);
+      } catch (error) {
+      } finally {
+        //  setLoading(false);
+      }
+    };
     getUserData();
-    //getBalanceData();
+    getDeptData();
   }, []);
 
   const handleOnChange = (event) => {
@@ -110,8 +110,6 @@ const Home = () => {
             />
           </Form.Group>
           <Button
-            //variant="primary"
-            //className="btn bg-warning text-dark"
             onClick={() => {
               setStep(1);
               setIsReadOnly(false);
