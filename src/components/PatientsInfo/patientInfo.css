@@ -1,0 +1,22 @@
+
+.align {
+    text-align: center;
+}
+.apptList{
+    margin-bottom: 20px;
+    text-align: center;
+}
+.viewBtn {
+    margin: 0px !important;
+    float: none !important;
+}
+
+.modalHeader{
+    border-bottom: none;
+    margin-bottom: 0px;
+}
+
+.modalTabel {
+    text-align: center;
+    margin-top: -24px;
+}

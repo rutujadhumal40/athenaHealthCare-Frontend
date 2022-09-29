@@ -32,11 +32,6 @@ const PatientsList = ({ filteredData }) => {
       setIsExistingPatient(true);
       setPatientId(patient_id);
       setPatientName(firstname);
-      // const { data: details } = await axios.get(
-      //   `${BASE_API_URL}/v1/patient/${patient_id}`
-      // );
-      // const { data: details } = await axios.get(`/patient.json`);
-      //   setData(details);
       setStep(1);
       if (selectedOption === "view") {
         setIsEdit(false);
@@ -65,27 +60,7 @@ const PatientsList = ({ filteredData }) => {
       navigate("/appointments");
     }
   };
-  // const handleDeleteClick = async (patient_id, motherName) => {
-  //   const response = window.confirm(
-  //     `Are you sure you want to delete patient data for mother name ${motherName}?`
-  //   );
-  //   if (response) {
-  //     try {
-  //       await axios.delete(`${BASE_API_URL}/v1/patient/${patient_id}`);
-  //       setSuccessMsg("Data is successfully deleted.");
-  //       setFilteredData(
-  //         filteredData.filter((patient) => patient.patient_id !== patient_id)
-  //       );
-  //       setErrorMsg("");
-  //       setTimeout(() => {
-  //         setSuccessMsg("");
-  //       }, 5000);
-  //     } catch (error) {
-  //       setSuccessMsg("");
-  //       setErrorMsg("Error while deleting data. Please try again.");
-  //     }
-  //   }
-  // };
+
   console.log("filteredData", filteredData);
   return (
     <div className="patients-list">
@@ -129,15 +104,9 @@ const PatientsList = ({ filteredData }) => {
                       }
                     />
                   </td>
-                  <td className="icon">
+                  <td>
                     <button
-                      style={{
-                        width: "140px",
-                        backgroundColor: "#5A84C3",
-                        color: "white",
-                        border: "0px",
-                        borderRadius: "10px",
-                      }}
+                      className="viewBtn"
                       onClick={() =>
                         handleClick(
                           department_id,
@@ -150,15 +119,9 @@ const PatientsList = ({ filteredData }) => {
                       View
                     </button>
                   </td>
-                  <td className="icon">
+                  <td>
                     <button
-                      style={{
-                        width: "140px",
-                        backgroundColor: "#5A84C3",
-                        color: "white",
-                        border: "0px",
-                        borderRadius: "10px",
-                      }}
+                      className="viewBtn"
                       onClick={() =>
                         handleClick(
                           department_id,

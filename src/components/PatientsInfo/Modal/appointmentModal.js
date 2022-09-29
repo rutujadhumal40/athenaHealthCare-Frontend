@@ -1,9 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { Table } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 import DataContext from "../../../context/DataContext";
+import "../patientInfo.css";
+
 const PatientModal = (props) => {
   const { show, setShow, modalData, apptId } = props;
   const { setInsurance, insurance, patientName } = useContext(DataContext);
@@ -32,14 +34,11 @@ const PatientModal = (props) => {
         aria-labelledby="example-custom-modal-styling-title"
         onHide={handleClose}
       >
-        <Modal.Header
-          closeButton
-          style={{ borderBottom: "none", marginBottom: "0px" }}
-        >
+        <Modal.Header closeButton className="modalHeader">
           <Modal.Title>Appointment Details for {patientName}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Table style={{ textAlign: "center", marginTop: "-24px" }}>
+          <Table className="modalTabel">
             <thead className="bg-secondary text-white">
               <tr>
                 <th>StartTime</th>
@@ -49,8 +48,7 @@ const PatientModal = (props) => {
             </thead>
             <tbody className="bg-light text-dark">
               {modalData.map((patient, index) => {
-                const { starttime, duration, date } =
-                  patient || {};
+                const { starttime, duration, date } = patient || {};
 
                 return (
                   <tr key={index}>
@@ -63,14 +61,12 @@ const PatientModal = (props) => {
             </tbody>
           </Table>
         </Modal.Body>
-        <Modal.Header style={{ borderBottom: "none" }}>
+        <Modal.Header className="modalHeader">
           <Modal.Title>Insurance Details</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
-          <Table
-            style={{ textAlign: "center", marginTop: "-24px" }}
-          >
+          <Table className="modalTabel">
             <thead className="bg-secondary text-white">
               <tr>
                 <th>Insurance Name</th>

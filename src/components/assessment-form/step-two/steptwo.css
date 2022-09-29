@@ -4,3 +4,14 @@
     text-decoration: underline;
     margin: 1rem;
 }
+.openAppointment{
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.bookAppointmentbtn {
+    width: 150px;
+    background-color:  #5A84C3;
+    color: white;
+    border: 0px;
+}

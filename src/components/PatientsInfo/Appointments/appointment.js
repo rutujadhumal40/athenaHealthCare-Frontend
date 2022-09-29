@@ -7,6 +7,7 @@ import { Button, Table } from "react-bootstrap";
 import PatientModal from "../Modal/appointmentModal";
 import { Link } from "react-router-dom";
 import { AiFillHome } from "react-icons/ai";
+import "../patientInfo.css";
 const Appointment = () => {
   const {
     patientId,
@@ -53,7 +54,7 @@ const Appointment = () => {
     setShow(true);
   };
 
-  console.log("isExistingPatient" ,isExistingPatient,isView);
+  console.log("isExistingPatient", isExistingPatient, isView);
   return (
     <>
       {isExistingPatient && !isView && <PatientStepper step={step} />}
@@ -71,23 +72,11 @@ const Appointment = () => {
             </Link>
           )}
           <div className={`step-form container step-three mt-5`}>
-            <h5 style={{ marginBottom: "20px", textAlign: "center" }}>
-              Appointments List for {patientName}
-            </h5>
-            {/* <div className="patients-list"> */}
-            {/* {successMsg && <Alert variant="success">{successMsg}</Alert>}
-        {errorMsg && <Alert variant="danger">{errorMsg}</Alert>} */}
-            <Table
-              style={{ textAlign: "center" }}
-              // striped
-              // bordered
-              // hover
-              // responsive
-            >
+            <h5 className="apptList">Appointments List for {patientName}</h5>
+            <Table className="align">
               <thead className="bg-secondary text-white">
                 <tr>
                   <th>Patient Name</th>
-                  {/* <th>Appointment ID</th> */}
                   <th>Department Name</th>
                   <th>Appointment Type</th>
                   <th>View details</th>
@@ -95,27 +84,18 @@ const Appointment = () => {
               </thead>
               <tbody className="bg-light text-dark">
                 {appointments.map((patient, index) => {
-                  const {
-                    patientid,
-                    appointmentid,
-                    departmentid,
-                    appointmenttype,
-                    providerid,
-                    starttime,
-                    duration,
-                    date,
-                  } = patient || {};
+                  const { appointmentid, departmentid, appointmenttype } =
+                    patient || {};
 
                   return (
                     <tr key={index}>
                       <td>{patientName}</td>
-                      {/* <td>{appointmentid}</td> */}
                       <td>{departmentid}</td>
                       <td>{appointmenttype}</td>
-                      <td className="icon">
+                      <td>
                         <Button
                           onClick={() => handleClick(appointmentid)}
-                          style={{ margin: "0px", float: "none" }}
+                          className="viewBtn"
                         >
                           View Details
                         </Button>

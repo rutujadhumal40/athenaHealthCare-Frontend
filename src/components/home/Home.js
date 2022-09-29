@@ -33,47 +33,23 @@ const Home = () => {
   useEffect(() => {
     const getUserData = async () => {
       try {
-        //setLoading(true);
         const { data: details } = await axios.get(
           `http://localhost:5000/getData`
         );
-        // const { data: details } = await axios.get(`/patients.json`);
-        console.log("Details", details);
         setUserData(details);
-        // setFilteredData([
-        //   {
-        //     patient_id: "1",
-        //     suffix: "Ms.",
-        //     firstname: "Rutuja",
-        //     lastname: "Dhumal",
-        //     countrycode: "US",
-        //     state: "NY",
-        //     homephone: "123",
-        //     mobilephone: "123",
-        //     zip: "123",
-        //     dob: "12/03/1996",
-        //     department_id: "1",
-        //     status: "active",
-        //   },
-        // ]);
       } catch (error) {
       } finally {
-        //  setLoading(false);
       }
     };
 
     const getDeptData = async () => {
       try {
-        //setLoading(true);
         const { data: details } = await axios.get(
           `http://localhost:5000/getDepartments`
         );
-        // const { data: details } = await axios.get(`/patients.json`);
-        console.log("Details", details);
         setDepartments(details);
       } catch (error) {
       } finally {
-        //  setLoading(false);
       }
     };
     getUserData();
@@ -81,8 +57,6 @@ const Home = () => {
   }, []);
 
   const handleOnChange = (event) => {
-    console.log("filteredData", filteredData);
-
     const text = event.target.value.trim();
     setSearchText(text);
     if (text !== "") {

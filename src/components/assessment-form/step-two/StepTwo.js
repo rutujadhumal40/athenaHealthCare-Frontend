@@ -48,7 +48,6 @@ const StepTwo = () => {
 
   const handleClick = async (appointment_id) => {
     setAppointmentId(appointment_id);
-    console.log("patientIdForAppt", patientIdForAppt, appointment_id);
     // navigate("/step-three");
     try {
       setLoading(true);
@@ -62,6 +61,10 @@ const StepTwo = () => {
     } catch (error) {
     } finally {
       setLoading(false);
+      const filterAppt = openAppt.filter(
+        (item) => item.appointment_id !== appointment_id
+      );
+      setOpenAppt(filterAppt);
       setShow(true);
     }
   };
@@ -83,7 +86,7 @@ const StepTwo = () => {
             </Link>
           )}
           <div className={`step-form container step-three mt-5`}>
-            <h5 style={{ marginBottom: "20px", textAlign: "center" }}>
+            <h5 className="openAppointment">
               Open Appointments for {patientName}
             </h5>
             <Table style={{ textAlign: "center" }}>
@@ -113,12 +116,7 @@ const StepTwo = () => {
                       <td>{start_time}</td>
                       <td className="icon">
                         <button
-                          style={{
-                            width: "150px",
-                            backgroundColor: "#5A84C3",
-                            color: "white",
-                            border: "0px",
-                          }}
+                          className="bookAppointmentbtn"
                           onClick={() => handleClick(appointment_id)}
                         >
                           {loading ? "Loading" : "Book Appointment"}
