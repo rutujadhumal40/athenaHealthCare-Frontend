@@ -1,22 +1,17 @@
-import axios from "axios";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 import ReactDOM from "react-dom";
+import axios from "axios";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import StepFour from "./components/assessment-form/step-four/StepFour";
 import StepOne from "./components/assessment-form/step-one/StepOne";
-import StepSix from "./components/assessment-form/step-six/StepSix";
-import StepThree from "./components/assessment-form/step-three/StepThree";
 import StepTwo from "./components/assessment-form/step-two/StepTwo";
-import StepFive from "./components/assessment-form/stepFive/StepFive";
 import Home from "./components/home/Home";
 import Appointment from "./components/PatientsInfo/Appointments/appointment";
 import BasicInfo from "./components/PatientsInfo/BasicInfo/BasicInfo";
-import Stepper from "./components/stepper/Stepper";
 import DataContext from "./context/DataContext";
-import "./index.css";
 import { BASE_API_URL } from "./utils/constants";
 import { initialState } from "./utils/initialstate";
+import "./index.css";
 
 const AppWrapper = () => {
   return (
@@ -45,17 +40,7 @@ const AppRoutes = () => {
   const [appointmentId, setAppointmentId] = useState();
   const [openAppt, setOpenAppt] = useState([]);
   const [isExistingPatient, setIsExistingPatient] = useState(false);
-
-  const handleUpdatePatient = async (patient_id, dataToUpdate) => {
-    try {
-      await axios.put(`${BASE_API_URL}/v1/patient/${patient_id}`, dataToUpdate);
-      // await axios.get(`/patient.json`);
-      return true;
-    } catch (error) {
-      console.log("Error while updating patient. Please try again");
-      return false;
-    }
-  };
+  const [isView, setIsView] = useState(false);
 
   return (
     <DataContext.Provider
@@ -70,7 +55,6 @@ const AppRoutes = () => {
         setIsReadOnly,
         setIsEdit,
         isEdit,
-        handleUpdatePatient,
         patientId,
         setPatientId,
         setFilteredData,
@@ -97,16 +81,14 @@ const AppRoutes = () => {
         setOpenAppt,
         isExistingPatient,
         setIsExistingPatient,
+        isView,
+        setIsView,
       }}
     >
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/step-one" element={<StepOne />} />
         <Route path="/step-two" element={<StepTwo />} />
-        <Route path="/step-three" element={<StepThree />} />
-        <Route path="/step-four" element={<StepFour />} />
-        <Route path="/step-five" element={<StepFive />} />
-        <Route path="/step-six" element={<StepSix />} />
         <Route path="*" element={<Navigate to="/" />} />
         <Route path="/basicInfo" element={<BasicInfo />} />
         <Route path="/appointments" element={<Appointment />} />

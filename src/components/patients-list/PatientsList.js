@@ -19,6 +19,7 @@ const PatientsList = ({ filteredData }) => {
     setIsExistingPatient,
     setpatientIdforAppt,
     isExistingPatient,
+    setIsView,
   } = useContext(DataContext);
 
   const handleViewDetailsClick = async (
@@ -27,6 +28,8 @@ const PatientsList = ({ filteredData }) => {
     selectedOption
   ) => {
     try {
+      setIsView(false);
+      setIsExistingPatient(true);
       setPatientId(patient_id);
       setPatientName(firstname);
       // const { data: details } = await axios.get(
@@ -50,6 +53,7 @@ const PatientsList = ({ filteredData }) => {
 
   const handleClick = async (department_id, patient_id, firstname, text) => {
     console.log("department_id", isExistingPatient, department_id, patient_id);
+    setIsView(true);
     setIsExistingPatient(true);
     setpatientIdforAppt(patient_id);
     setDeptId(department_id);

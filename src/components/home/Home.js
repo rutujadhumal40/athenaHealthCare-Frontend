@@ -19,7 +19,10 @@ const Home = () => {
     patientId,
     setBalance,
     setShowTable,
-    departments, setDepartments
+    departments,
+    setDepartments,
+    setIsExistingPatient,
+    setIsView,
   } = useContext(DataContext);
   const [searchText, setSearchText] = useState("");
   const [userData, setUserData] = useState([]);
@@ -96,6 +99,16 @@ const Home = () => {
     }
   };
 
+  const handleRegister = () => {
+    setStep(1);
+    setIsReadOnly(false);
+    setIsEdit(false);
+    setData(initialState);
+    navigate("/step-one");
+    setIsExistingPatient(false);
+    setIsView(false);
+  };
+
   return (
     <>
       <Header />
@@ -109,17 +122,7 @@ const Home = () => {
               onChange={handleOnChange}
             />
           </Form.Group>
-          <Button
-            onClick={() => {
-              setStep(1);
-              setIsReadOnly(false);
-              setIsEdit(false);
-              setData(initialState);
-              navigate("/step-one");
-            }}
-          >
-            Register Patient
-          </Button>
+          <Button onClick={() => handleRegister()}>Register Patient</Button>
         </div>
         {loading ? (
           <p className="loading">Loading...</p>

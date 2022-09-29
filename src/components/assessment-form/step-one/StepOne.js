@@ -7,6 +7,7 @@ import { REQUIRED_ERROR_MSG } from "../../../utils/constants";
 import Stepper from "../../stepper/Stepper";
 import Header from "../form-header/Header";
 import "./stepone.css";
+import axios from "axios";
 
 const StepOne = () => {
   const [loading, setLoading] = useState(false);
@@ -33,15 +34,11 @@ const StepOne = () => {
     values = { ...values, department_id: deptId };
     try {
       setLoading(true);
-      // const resData = await axios.post(
-      //   `http://localhost:5000/addPatientAthena`,
-      //   {
-      //     values,
-      //   }
-      // );
-      // console.log("DATA INSIDE SUBMIT", resData.data.patient_id);
-      setpatientIdforAppt(1);
-      // setIdforAppt(resData.data.patient_id);
+      const resData = await axios.post(
+        `http://localhost:5000/addPatientAthena`,
+        { values }
+      );
+      setpatientIdforAppt(resData.data.patient_id);
     } catch (error) {
     } finally {
       setLoading(false);
@@ -79,7 +76,11 @@ const StepOne = () => {
     );
   };
   return loading ? (
-    <>Loading ...</>
+    <div class="d-flex justify-content-center">
+      <div className="spinner-border m-5" role="status">
+        <span className="sr-only"></span>
+      </div>
+    </div>
   ) : (
     <div>
       <Header />

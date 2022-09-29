@@ -5,7 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 import DataContext from "../../../context/DataContext";
 const PatientModal = (props) => {
-  const { show, setShow, appointments, modalData, apptId } = props;
+  const { show, setShow, modalData, apptId } = props;
   const { setInsurance, insurance, patientName } = useContext(DataContext);
 
   const handleClose = () => setShow(false);
@@ -39,16 +39,9 @@ const PatientModal = (props) => {
           <Modal.Title>Appointment Details for {patientName}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Table
-            style={{ textAlign: "center", marginTop: "-24px" }}
-            // striped
-            // bordered
-            // hover
-            // responsive
-          >
+          <Table style={{ textAlign: "center", marginTop: "-24px" }}>
             <thead className="bg-secondary text-white">
               <tr>
-                {/* <th>ProviderID</th> */}
                 <th>StartTime</th>
                 <th>Duration</th>
                 <th>Date</th>
@@ -56,12 +49,11 @@ const PatientModal = (props) => {
             </thead>
             <tbody className="bg-light text-dark">
               {modalData.map((patient, index) => {
-                const { appointmentid, providerid, starttime, duration, date } =
+                const { starttime, duration, date } =
                   patient || {};
 
                 return (
                   <tr key={index}>
-                    {/* <td>{providerid}</td> */}
                     <td>{starttime}</td>
                     <td>{duration} mins</td>
                     <td>{date}</td>
@@ -78,17 +70,11 @@ const PatientModal = (props) => {
         <Modal.Body>
           <Table
             style={{ textAlign: "center", marginTop: "-24px" }}
-            // striped
-            // bordered
-            // hover
-            // responsive
           >
             <thead className="bg-secondary text-white">
               <tr>
                 <th>Insurance Name</th>
                 <th>Insurance Type</th>
-                {/* <th>Policy Number</th> */}
-                {/* <th>Insurance Phone</th> */}
                 <th>Insurance Policyholder</th>
                 <th>Country</th>
                 <th>State</th>
@@ -102,9 +88,7 @@ const PatientModal = (props) => {
               {insurance.map((item, index) => {
                 const {
                   insuranceplanname,
-                  policynumber,
                   issuedate,
-                  insurancephone,
                   insurancepolicyholder,
                   expirationdate,
                   insurancetype,
@@ -118,8 +102,6 @@ const PatientModal = (props) => {
                   <tr key={index}>
                     <td>{insuranceplanname}</td>
                     <td>{insurancetype}</td>
-                    {/* <td>{policynumber}</td> */}
-                    {/* <td>{insurancephone}</td> */}
                     <td>{insurancepolicyholder}</td>
                     <td>{insurancepolicyholdercountrycode}</td>
                     <td>{insurancepolicyholderstate}</td>

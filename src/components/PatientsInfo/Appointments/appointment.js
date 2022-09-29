@@ -18,7 +18,10 @@ const Appointment = () => {
     apptId,
     patientName,
     isExistingPatient,
+    isView,
   } = useContext(DataContext);
+
+  console.log("isExistingPatient", isExistingPatient, isView);
 
   const [show, setShow] = useState(false);
   const [modalData, setModalData] = useState([]);
@@ -49,9 +52,11 @@ const Appointment = () => {
     setModalData(updatedData);
     setShow(true);
   };
+
+  console.log("isExistingPatient" ,isExistingPatient,isView);
   return (
     <>
-      {!isExistingPatient && <PatientStepper step={step} />}
+      {isExistingPatient && !isView && <PatientStepper step={step} />}
       {loading ? (
         <div class="d-flex justify-content-center">
           <div className="spinner-border m-5" role="status">
@@ -60,9 +65,11 @@ const Appointment = () => {
         </div>
       ) : (
         <>
-          <Link to={step >= 1 ? "/" : ""}>
-            <AiFillHome color="#5A84C3" size={30} className="home" />
-          </Link>
+          {isExistingPatient && isView && (
+            <Link to={step >= 1 ? "/" : ""}>
+              <AiFillHome color="#5A84C3" size={30} className="home" />
+            </Link>
+          )}
           <div className={`step-form container step-three mt-5`}>
             <h5 style={{ marginBottom: "20px", textAlign: "center" }}>
               Appointments List for {patientName}

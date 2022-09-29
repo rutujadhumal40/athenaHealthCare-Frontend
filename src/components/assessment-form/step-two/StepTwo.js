@@ -35,26 +35,17 @@ const StepTwo = () => {
   }, []);
   const navigate = useNavigate();
   const {
-    data,
-    setData,
     step,
-    isReadOnly,
-    handleUpdatePatient,
-    patientId,
-    isEdit,
-    departments,
-    setDepartments,
     deptId,
     patientIdForAppt,
     setAppointmentId,
-    setStep,
-    appointmentId,
     openAppt,
     setOpenAppt,
     isExistingPatient,
+    isView,
+    patientName,
   } = useContext(DataContext);
 
-  console.log("isExistingPatient", isExistingPatient);
   const handleClick = async (appointment_id) => {
     setAppointmentId(appointment_id);
     console.log("patientIdForAppt", patientIdForAppt, appointment_id);
@@ -74,82 +65,10 @@ const StepTwo = () => {
       setShow(true);
     }
   };
-  // const {
-  //   successMsg,
-  //   setSuccessMsg,
-  //   errorMsg,
-  //   setErrorMsg,
-  //   isUpdated,
-  //   setIsUpdated,
-  //   inProgress,
-  //   setInProgress,
-  // } = useAlert();
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm({
-  //   defaultValues: {
-  //     dateOfService: data?.patientVisit?.dateOfService
-  //       ? getConvertedDate(data?.patientVisit?.dateOfService)
-  //       : null,
-  //     pulseRate: data?.patientVisit?.vitalSigns?.temperature?.pulseRate,
-  //     respirationRate:
-  //       data?.patientVisit?.vitalSigns?.temperature?.respirationRate,
-  //     bloodPressure: data?.patientVisit?.vitalSigns?.temperature?.bloodPressure,
-  //     weight: data?.patientVisit?.vitalSigns?.temperature?.weight,
-  //     smokeStatus: data?.patientVisit?.smokeStatus === true ? "true" : "false",
-  //   },
-  // });
-
-  // const showNextButton = isUpdated || (!isReadOnly && !isEdit) || isReadOnly;
-
-  // const handleFormSubmit = async (values) => {
-  //   const { dateOfService, smokeStatus, ...rest } = values;
-  //   const dataToUpdate = {
-  //     patientVisit: {
-  //       dateOfService,
-  //       smokeStatus: smokeStatus === "true" ? true : false,
-  //       vitalSigns: {
-  //         temperature: {
-  //           ...rest,
-  //         },
-  //       },
-  //     },
-  //   };
-  //   setData((prev) => ({
-  //     ...prev,
-  //     ...dataToUpdate,
-  //   }));
-  //   if (showNextButton) {
-  //     setSuccessMsg("");
-  //     setErrorMsg("");
-  //     navigate("/step-three");
-  //   } else {
-  //     try {
-  //       setInProgress(true);
-  //       const response = await handleUpdatePatient(patientId, {
-  //         ...data,
-  //         ...dataToUpdate,
-  //       });
-  //       if (response === true) {
-  //         setIsUpdated(true);
-  //         setSuccessMsg("Data is successfully updated.");
-  //         setErrorMsg("");
-  //       } else {
-  //         setErrorMsg("Error while updating data. Please try again.");
-  //         setSuccessMsg("");
-  //       }
-  //     } catch (error) {
-  //     } finally {
-  //       setInProgress(false);
-  //     }
-  //   }
-  // };
 
   return (
     <>
-      {!isExistingPatient && <Stepper step={step} />}
+      {!isExistingPatient && !isView && <Stepper step={step} />}
       {loading ? (
         <div class="d-flex justify-content-center">
           <div className="spinner-border m-5" role="status">
@@ -158,12 +77,14 @@ const StepTwo = () => {
         </div>
       ) : (
         <>
-          <Link to={step >= 1 ? "/" : ""}>
-            <AiFillHome color="#5A84C3" size={30} className="home" />
-          </Link>
+          {isExistingPatient && isView && (
+            <Link to={step >= 1 ? "/" : ""}>
+              <AiFillHome color="#5A84C3" size={30} className="home" />
+            </Link>
+          )}
           <div className={`step-form container step-three mt-5`}>
             <h5 style={{ marginBottom: "20px", textAlign: "center" }}>
-              Open Appointments for {deptId}
+              Open Appointments for {patientName}
             </h5>
             <Table style={{ textAlign: "center" }}>
               <thead className="table-active">
